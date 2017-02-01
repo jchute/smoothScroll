@@ -34,7 +34,7 @@ For when there is a fixed header.
     
 ### Using options
 
-    $('.yourDiv').parallax({
+    $('.yourDiv').smoothScroll({
       scrollTo: 100,
       top: 50
     });
