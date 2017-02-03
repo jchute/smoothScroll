@@ -1,8 +1,8 @@
 /*
 Smooth Scroll
-Version: 1.1
+Version: 1.2
 Developer: Jonathan Chute
-Year: 2016
+Year: 2017
 */
 (function( $ ) {
     $.fn.smoothScroll = function(options) {
@@ -13,7 +13,8 @@ Year: 2016
 
         var settings = $.extend( {
             'scrollTo': '',
-            'top': 0
+            'top': 0,
+            'mobile': ''
         }, options);
         
         var scrollTo;
@@ -24,7 +25,12 @@ Year: 2016
                     var target = $(this.hash);
                     if (target.length) {
                         target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                        scrollTo = target.offset().top;
+                        scrollTo = target.offset().top - parseInt($('html').css('margin-top'));
+                        if('' !== settings.mobile && $('body').width() < 780) {
+                            scrollTo -= settings.mobile;
+                        } else {
+                            scrollTo -= settings.top;
+                        }
                     } else {
                         scrollTo = 0;
                     }
@@ -33,7 +39,7 @@ Year: 2016
                 scrollTo = settings.scrollTo;
             }
             $('html,body').animate({
-                scrollTop: scrollTo - parseInt($('html').css('margin-top')) - settings.top
+                scrollTop: scrollTo
             }, 500);
 
             return false;
