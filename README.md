@@ -23,7 +23,7 @@ HTML / Javascript
   
     <script type="text/javascript">
     $(document).ready(function(){
-      $('a[href*="#"]:not([href="#"])').smoothScroll();
+      $('a[href^="#"]:not([href="#"])').smoothScroll();
     });
     </script>
     
@@ -37,7 +37,7 @@ For when there is a fixed header.
     
 ### Using options
 
-    $('.yourDiv').smoothScroll({
+    $('a[href^="#"]:not([href="#"])').smoothScroll({
       distance: 100,
       top: 50,
       scrollExternal: true
