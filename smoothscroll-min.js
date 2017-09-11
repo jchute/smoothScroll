@@ -1,7 +1,7 @@
 /*
 Smooth Scroll
-Version: 1.2
+Version: 1.3
 Developer: Jonathan Chute
 Year: 2017
 */
-!function(a){a.fn.smoothScroll=function(b){var c=a(this);if(void 0!==c[0]){var e,d=a.extend({scrollTo:"",top:0,mobile:""},b);c.click(function(){if(""===d.scrollTo){if(location.pathname.replace(/^\//,"")==this.pathname.replace(/^\//,"")&&location.hostname==this.hostname){var b=a(this.hash);b.length?(b=b.length?b:a("[name="+this.hash.slice(1)+"]"),e=b.offset().top-parseInt(a("html").css("margin-top")),e-=""!==d.mobile&&a("body").width()<780?d.mobile:d.top):e=0}}else e=d.scrollTo;return a("html,body").animate({scrollTop:e},500),!1})}}}(jQuery);
+!function(t){t.fn.smoothScroll=function(n){function o(n){return n.length?n.offset().top-parseInt(t("html").css("margin-top"))-e.top:0}function a(n){var o=t(window).scrollTop(),a=n>o?n-o:o-n;t("html, body").animate({scrollTop:n},a)}var i=t(this);if(void 0!==i[0]){var e=t.extend({distance:0,top:0,scrollExternal:!1},n),r=e.distance;if(i.click(function(n){if(n.preventDefault(),!e.distance){t(this).attr("href");if("#"==t(this).attr("href")[0]&&location.pathname.replace(/^\//,"")==this.pathname.replace(/^\//,"")&&location.hostname==this.hostname){var i=t(this.hash);r=o(i)}}a(r)}),e.scrollExternal&&window.location.hash){var l=t(window.location.hash);a(r=o(l))}}}}(jQuery);
