@@ -5,10 +5,13 @@ Scrolls the page smoothly when selecting an anchor tag.
 
 No options are required.
 
-| Option  |  Type   | Default | Description |
-|---------|---------|---------|-------------|
-| scrollTo| Integer |   ''    | Optionally set a fixed point to scroll to on the page. |
-|  top    | Integer |    0    | Sets a padding to add to the scroll, useful for fixed headers. |
+|     Option     |   Type  | Default | Description |
+|----------------|---------|---------|-------------|
+|    distance    | Integer |    0    | Optionally set a fixed point to scroll to on the page.\* |
+|       top      | Integer |    0    | Sets a padding to add to the scroll, useful for fixed headers. |
+| scrollExternal | Boolean |  false  | Optionally allow links on new pages to scroll to their location rather than simply load. |
+
+*\* In order to set the scroll to the top, use -1 as 0 will evaluate to false.*
 
 ## Examples:
 
@@ -35,8 +38,9 @@ For when there is a fixed header.
 ### Using options
 
     $('.yourDiv').smoothScroll({
-      scrollTo: 100,
-      top: 50
+      distance: 100,
+      top: 50,
+      scrollExternal: true
     });
 
 ## Other information
