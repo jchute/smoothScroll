@@ -9,7 +9,7 @@ No options are required.
 |----------------|---------|---------|-------------|
 |    distance    | Integer |    0    | Optionally set a fixed point to scroll to on the page.\* |
 |       top      | Integer |    0    | Sets a padding to add to the scroll, useful for fixed headers. |
-| scrollExternal | Boolean |  false  | Optionally allow links on new pages to scroll to their location rather than simply load. |
+| scrollExternal | Boolean |   true  | Optionally allow links on new pages to scroll to their location rather than simply load. |
 
 *\* In order to set the scroll to the top, use -1 as 0 will evaluate to false.*
 
@@ -23,7 +23,7 @@ HTML / Javascript
   
     <script type="text/javascript">
     $(document).ready(function(){
-      $('a[href^="#"]:not([href="#"])').smoothScroll();
+      $('a[href*="#"]').smoothScroll();
     });
     </script>
     
@@ -37,7 +37,7 @@ For when there is a fixed header.
     
 ### Using options
 
-    $('a[href^="#"]:not([href="#"])').smoothScroll({
+    $('a[href*="#"]').smoothScroll({
       distance: 100,
       top: 50,
       scrollExternal: true
