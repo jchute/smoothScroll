@@ -1,6 +1,6 @@
 /*
 Smooth Scroll
-Version: 1.3
+Version: 1.4
 Developer: Jonathan Chute
 Year: 2017
 */
@@ -14,29 +14,48 @@ Year: 2017
         var settings = $.extend( {
             'distance': 0,
             'top': 0,
-            'scrollExternal': false,
+            'scrollExternal': true,
         }, options);
 
         var distance = settings.distance;
 
+        // Normalize href calls to minimize page reloads
+        mainObject.each(function() {
+            var current = window.location.href,
+                href = $(this).prop('href'),
+                hash = href.substr(href.indexOf('#'));
+            current = current.substr(0, current.indexOf('#'));
+            href = href.substr(0, href.indexOf('#'));
+            if(current == href) {
+                $(this).attr('href', hash);
+            }
+        });
+
         mainObject.click(function(e) {
-            e.preventDefault();
-            if(!settings.distance) {
-                var href = $(this).attr('href');
-                if($(this).attr('href')[0] == '#') {
-                    if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                        var target = $(this.hash);
-                        distance = GetElementScrollTop( target );
+            // Prevent the page from reloading when navigating to same page
+            var current = window.location.href,
+                href = $(this).prop('href');
+            current = current.substr(0, current.indexOf('#'));
+            href = href.substr(0, href.indexOf('#'));
+            if(current == href) {
+                e.preventDefault();
+                // Get the element's href distance from top if a requested distance hasn't been set.
+                if(!settings.distance) {
+                    if($(this).attr('href')[0] == '#') {
+                        if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                            var target = $(this.hash);
+                            distance = GetElementScrollTop( target );
+                        }
                     }
                 }
+                AnimateScroll( distance, $(this).prop('href') );
             }
-            AnimateScroll( distance );
         });
 
         if(settings.scrollExternal && window.location.hash) {
             var target = $(window.location.hash);
             var distance = GetElementScrollTop( target );
-            AnimateScroll(distance);
+            AnimateScroll(distance, false);
         }
 
         function GetElementScrollTop( element ) {
@@ -47,12 +66,16 @@ Year: 2017
             }
         }
 
-        function AnimateScroll( distance ) {
+        function AnimateScroll( distance, href ) {
             var current = $(window).scrollTop();
             var duration = (distance > current) ? distance - current : current - distance;
             $('html, body').animate({
                 scrollTop: distance
-            }, duration);
+            }, duration, function() {
+                if( href ) {
+                    window.location.href = href;
+                }
+            });
         }
 
     };
