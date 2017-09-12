@@ -71,10 +71,6 @@ Year: 2017
             var duration = (distance > current) ? distance - current : current - distance;
             $('html, body').animate({
                 scrollTop: distance
-            }, duration, function() {
-                if( href ) {
-                    window.location.href = href;
-                }
             });
         }
 
