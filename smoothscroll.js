@@ -1,6 +1,6 @@
 /*
 Smooth Scroll
-Version: 1.4
+Version: 1.5
 Developer: Jonathan Chute
 Year: 2017
 */
@@ -19,37 +19,15 @@ Year: 2017
 
         var distance = settings.distance;
 
-        // Normalize href calls to minimize page reloads
-        mainObject.each(function() {
-            var current = window.location.href,
-                href = $(this).prop('href'),
-                hash = href.substr(href.indexOf('#'));
-            current = current.substr(0, current.indexOf('#'));
-            href = href.substr(0, href.indexOf('#'));
-            if(current == href) {
-                $(this).attr('href', hash);
-            }
-        });
-
-        mainObject.click(function(e) {
-            // Prevent the page from reloading when navigating to same page
-            var current = window.location.href,
-                href = $(this).prop('href');
-            current = current.substr(0, current.indexOf('#'));
-            href = href.substr(0, href.indexOf('#'));
-            if(current == href) {
-                e.preventDefault();
-                // Get the element's href distance from top if a requested distance hasn't been set.
-                if(!settings.distance) {
-                    if($(this).attr('href')[0] == '#') {
-                        if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                            var target = $(this.hash);
-                            distance = GetElementScrollTop( target );
-                        }
-                    }
+        mainObject.not('[href="#"]').click(function(e) {
+            // Get the element's href distance from top if a requested distance hasn't been set.
+            if(!settings.distance) {
+                if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    distance = GetElementScrollTop( target );
                 }
-                AnimateScroll( distance, $(this).prop('href') );
             }
+            AnimateScroll( distance, $(this).prop('href') );
         });
 
         if(settings.scrollExternal && window.location.hash) {
