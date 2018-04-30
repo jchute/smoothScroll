@@ -33,7 +33,9 @@ Year: 2017
         if(settings.scrollExternal && window.location.hash) {
             var target = $(window.location.hash);
             var distance = GetElementScrollTop( target );
-            AnimateScroll(distance, false);
+            if( $(this).get(0).href === window.location.href ) {
+                AnimateScroll(distance, false);
+            }
         }
 
         function GetElementScrollTop( element ) {
